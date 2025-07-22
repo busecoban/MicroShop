@@ -1,0 +1,29 @@
+# Build folders
+bin/
+obj/
+out/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio folders
+.vs/
+
+# JetBrains Rider
+.idea/
+
+# Mac & Windows system files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Secrets (if used)
+secrets.json
+
+# Docker
+**/docker-compose.override.yml
