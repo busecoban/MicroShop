@@ -3,8 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using UserService.Data;
 using UserService.DTOs;
 using UserService.Models;
+using UserService.Services;
 using System.Security.Cryptography;
 using System.Text;
+using BCrypt.Net;
 
 namespace UserService.Controllers;
 
@@ -12,17 +14,19 @@ namespace UserService.Controllers;
 [Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
-    private readonly UserDbContext _db;
+    private readonly UserDbContext _context;
+    private readonly JwtService _jwt;
 
-    public AuthController(UserDbContext db)
+    public AuthController(UserDbContext context, JwtService jwt)
     {
-        _db = db;
+        _context = context;
+        _jwt = jwt;
     }
 
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterRequest request)
     {
-        if (await _db.Users.AnyAsync(u => u.Email == request.Email))
+        if (await _context.Users.AnyAsync(u => u.Email == request.Email))
         {
             return Conflict(new { message = "Email already registered." });
         }
@@ -37,8 +41,8 @@ public class AuthController : ControllerBase
             CreatedAt = DateTime.UtcNow
         };
 
-        _db.Users.Add(user);
-        await _db.SaveChangesAsync();
+        _context.Users.Add(user);
+        await _context.SaveChangesAsync();
 
         return Created("", new
         {
@@ -50,11 +54,24 @@ public class AuthController : ControllerBase
         });
     }
 
-    private string HashPassword(string password)
+    [HttpPost("login")]
+    public IActionResult Login([FromBody] LoginRequest request)
     {
-        using var sha256 = SHA256.Create();
-        var bytes = Encoding.UTF8.GetBytes(password);
-        var hash = sha256.ComputeHash(bytes);
-        return Convert.ToBase64String(hash);
+        var user = _context.Users.SingleOrDefault(u => u.Email == request.Email);
+
+        if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
+        {
+            return Unauthorized(new { message = "Invalid credentials" });
+        }
+
+        var token = _jwt.GenerateToken(user);
+
+        return Ok(new { token });
     }
+
+  private string HashPassword(string password)
+{
+    return BCrypt.Net.BCrypt.HashPassword(password);
+}
+
 }
