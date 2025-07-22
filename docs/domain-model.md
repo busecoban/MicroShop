@@ -1,62 +1,49 @@
 # 🧩 Domain Model – MicroShop
 
-This document defines the core entities of the MicroShop microservices-based e-commerce system. Each microservice is responsible for its own bounded context and database, with minimal shared knowledge across domains.
+---
+
+## 👤 User Entity (.NET 8 + PostgreSQL)
+
+| Field      | Type   | Description        |
+| ---------- | ------ | ------------------ |
+| id         | UUID   | User ID            |
+| name       | string | Full name          |
+| email      | string | Login email        |
+| password   | string | Hashed password    |
+| role       | enum   | customer / admin   |
+| created_at | time   | Creation timestamp |
 
 ---
 
-## 👤 User Entity
+## 📦 Product Entity (Node.js + MongoDB + Redis)
 
-**Service:** `user-service`  
-**Database:** PostgreSQL
-
-| Field      | Type            | Description               |
-| ---------- | --------------- | ------------------------- |
-| id         | UUID            | Unique identifier         |
-| name       | string          | Full name                 |
-| email      | string (unique) | Login email               |
-| password   | string (hashed) | Encrypted password        |
-| role       | enum            | `customer` or `admin`     |
-| created_at | timestamp       | Timestamp of registration |
+| Field       | Type      | Description        |
+| ----------- | --------- | ------------------ |
+| \_id        | ObjectId  | MongoDB ID         |
+| name        | string    | Product name       |
+| description | string    | Details            |
+| price       | float     | Price in currency  |
+| stock       | integer   | Available quantity |
+| created_at  | timestamp | Creation time      |
 
 ---
 
-## 📦 Product Entity
+## 🧾 Order Entity (Spring Boot + PostgreSQL)
 
-**Service:** `product-service`  
-**Database:** MongoDB  
-**Cache:** Redis (frequently accessed product listings)
-
-| Field       | Type      | Description               |
-| ----------- | --------- | ------------------------- |
-| \_id        | ObjectId  | MongoDB unique identifier |
-| name        | string    | Product name              |
-| description | string    | Product description       |
-| price       | float     | Product price             |
-| stock       | integer   | Stock quantity            |
-| created_at  | timestamp | Time of product creation  |
+| Field       | Type  | Description                |
+| ----------- | ----- | -------------------------- |
+| id          | UUID  | Order ID                   |
+| user_id     | UUID  | Reference to user          |
+| items       | array | product_id + quantity      |
+| total_price | float | Calculated total           |
+| status      | enum  | pending / processed / fail |
+| created_at  | time  | Order time                 |
 
 ---
 
-## 🧾 Order Entity
-
-**Service:** `order-service`  
-**Database:** PostgreSQL  
-**Communication:** Receives events via RabbitMQ from order placement
-
-| Field       | Type      | Description                         |
-| ----------- | --------- | ----------------------------------- |
-| id          | UUID      | Unique order ID                     |
-| user_id     | UUID      | ID of the user who placed the order |
-| items       | array     | List of `{ product_id, quantity }`  |
-| total_price | float     | Total price of the order            |
-| status      | enum      | `pending`, `processed`, `failed`    |
-| created_at  | timestamp | Order creation time                 |
-
----
-
-## 🔗 Entity Relationships (Logical View)
+## 🔗 Relationships (Logical View)
 
 ```text
-User (1) ────────< places >──────── (∞) Order
-Order (1) ────────< contains >───── (∞) Product
+User (1) ──────< places >────── (∞) Order
+Order (1) ─────< contains >──── (∞) Product
 ```

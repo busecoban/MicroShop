@@ -1,66 +1,83 @@
 # 🛍️ MicroShop – Microservice E-Commerce System
 
-MicroShop is a distributed e-commerce backend system built as a personal software engineering project. It is designed to reflect modern microservice architecture principles including modularity, service autonomy, asynchronous messaging, and cloud-native deployment.
+MicroShop is a personal software engineering project designed to implement a realistic, microservice-based e-commerce backend system. The project follows modern software architecture principles such as service autonomy, asynchronous communication, containerized deployment, and observability.
 
-The project is developed for learning purposes with real-world tools and practices such as REST APIs, Docker, Kubernetes, Redis, RabbitMQ, and Prometheus.
+This project is developed for self-improvement, inspired by the CSE438 Microservice Architecture syllabus, but is not affiliated with any course or institution.
 
 ---
 
 ## 🎯 Project Goals
 
-- Learn and apply microservice architectural principles
-- Build a scalable and modular e-commerce system
-- Use asynchronous communication and service autonomy
-- Explore real-world tools like Docker, Kubernetes, Redis, and RabbitMQ
+- Build a scalable and modular e-commerce backend system
+- Learn and apply microservice patterns and distributed system principles
+- Practice with REST APIs, messaging queues, containerization, and observability tools
+- Gain experience with multiple languages and frameworks
 
 ---
 
-## 🧱 System Architecture (Planned)
+## 🧱 System Architecture
 
-| Service         | Tech Stack         | Database        | Description                                  |
-| --------------- | ------------------ | --------------- | -------------------------------------------- |
-| User Service    | Java + Spring Boot | PostgreSQL      | Handles registration, login, JWT auth        |
-| Product Service | Node.js + Express  | MongoDB + Redis | Manages products and caching                 |
-| Order Service   | Python + Flask     | PostgreSQL      | Processes orders asynchronously via RabbitMQ |
+| Service         | Tech Stack            | Database        | Description                                       |
+| --------------- | --------------------- | --------------- | ------------------------------------------------- |
+| User Service    | .NET 8 (ASP.NET Core) | PostgreSQL      | Handles user registration and login with JWT auth |
+| Product Service | Node.js + Express     | MongoDB + Redis | Manages product catalog and caching               |
+| Order Service   | Spring Boot (Java 21) | PostgreSQL      | Processes orders asynchronously using RabbitMQ    |
 
-- All services communicate via REST and RabbitMQ
-- Each service has its own container and database
-- Deployment will be managed via Kubernetes
+- Each service runs independently in its own container
+- Services communicate via REST APIs and RabbitMQ messages
+- Databases are not shared across services
 
 ---
 
 ## 🛠️ Technologies Used
 
-- Java 21, Spring Boot
-- Node.js, Express.js
-- Python 3.10, Flask
+- C# (.NET 8), Java (Spring Boot), JavaScript (Node.js)
 - PostgreSQL, MongoDB, Redis
-- RabbitMQ (event messaging)
-- Docker, Kubernetes, Prometheus
-- Swagger / OpenAPI for API documentation
-- Git & GitHub for version control and CI
+- RabbitMQ for asynchronous messaging
+- Docker & Kubernetes for containerization and orchestration
+- Prometheus, ELK Stack for observability
+- Swagger/OpenAPI for API documentation
+- Git & GitHub for version control
 
 ---
 
-## 🧪 Software Lifecycle Process
+## 📦 Software Project Lifecycle
 
-1. Requirements analysis ✅
-2. System and domain modeling
-3. API & database design
-4. Service-by-service implementation
-5. Integration testing
-6. Containerization & deployment
-7. Observability & monitoring
-8. Final documentation and showcase
+This project follows a structured software engineering process:
+
+1. Requirements Analysis ✅
+2. Domain Modeling ✅
+3. API & Database Design (in progress)
+4. Microservice Implementation (per service)
+5. Integration & Asynchronous Communication
+6. Testing (unit, integration, contract)
+7. Dockerization & Kubernetes Deployment
+8. Logging, Monitoring, and Observability
+9. Documentation & Final Showcase
 
 ---
 
-## 🚀 Local Setup (To be added later)
+## 🚀 Setup Instructions (Coming Soon)
 
-Each service will be independently deployable using Docker.
+Setup and run instructions for each microservice will be added as development progresses.
 
-```bash
-# Example (to be updated per service)
-cd user-service
-./mvnw spring-boot:run
-```
+---
+
+## 📚 Documentation
+
+- Requirements: [docs/requirements.md](docs/requirements.md)
+- Domain Model: [docs/domain-model.md](docs/domain-model.md)
+- API Docs: Swagger/OpenAPI files per service (coming soon)
+- System Architecture Diagram (coming soon)
+
+---
+
+## 📈 Progress Tracker
+
+- [x] Project scope and tech stack defined
+- [x] Requirements documented
+- [x] Domain model created
+- [ ] API and data models designed
+- [ ] Microservices under development
+- [ ] Docker/Kubernetes setup
+- [ ] Observability and monitoring tools integrated
