@@ -2,7 +2,7 @@
 
 ## 🛍️ Project Overview
 
-MicroShop is a microservices-based e-commerce system designed for learning and implementing modern software architecture principles as part of the CSE438 course. It provides essential e-commerce features such as user registration, product listing, and order management using a distributed, scalable architecture.
+MicroShop is a microservices-based e-commerce system designed for learning and implementing modern software architecture principles. It provides essential e-commerce features such as user registration, product listing, and order management using a distributed, scalable architecture.
 
 ## 👤 User Roles
 
